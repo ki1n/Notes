@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Notes</string>
+
+    <string name="note_heading">Заголовок заметки</string>
+    <string name="noteText">Текст заметки</string>
+    <string name="deadLine">Временное ограничение</string>
+    <string name="date_and_time">Дата и время</string>
+    <string name="open_calendar">Открыть календарь</string>
+    <string name="new_note">Заметка</string>
+    <string name="save">Сохранить</string>
+</resources>
