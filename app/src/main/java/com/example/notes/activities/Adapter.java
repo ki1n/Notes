@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
+import com.example.notes.App;
 import com.example.notes.R;
 import com.example.notes.activities.details.NewNotesActivity;
 import com.example.notes.model.Note;
@@ -96,7 +97,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
 
     // функция котрая позволит обновить список сожержимое адаптера
     public void setItemsNote(List<Note> notes){
-        sortedList.replaceAll(notes); // sortedList сравнит содержимое с тем что есть с новым и сам всё что нужн заменит
+        sortedList.replaceAll(notes); // sortedList сравнит содержимое с тем что есть с новым и сам всё что нужно заменит
     }
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
@@ -126,7 +127,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    return false;
+                    App.getInstance().getNoteDao().delete(note);
+                    return true;
                 }
             });
         }

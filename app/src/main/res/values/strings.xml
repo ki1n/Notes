@@ -8,4 +8,11 @@
     <string name="open_calendar">Открыть календарь</string>
     <string name="new_note">Заметка</string>
     <string name="save">Сохранить</string>
+    <string name="new_pin_code_hint">0000</string>
+    <string name="new_pin_code">Введите пин-код</string>
+    <string name="saveBtn">Сохранить</string>
+    <string name="password_visibility">Видимость пароля</string>
+    <string name="password_save">Пароль сохранён</string>
+    <string name="password_no_save">Не корректоно введён пароль</string>
+    <string name="settings">Настройки</string>
 </resources>

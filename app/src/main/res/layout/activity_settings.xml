@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.settings.SettingsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar_settings"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:paddingStart="4dp"
+        android:text="@string/new_pin_code"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar_settings"
+        tools:ignore="RtlSymmetry" />
+
+    <EditText
+        android:id="@+id/et_new_pin"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/new_pin_code_hint"
+        android:importantForAutofill="no"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:padding="8dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/Ibt_visibility_invisible"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/bt_save_pin"
+        style="@style/TextAppearance.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/saveBtn"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/Ibt_visibility_invisible"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_new_pin"
+        app:layout_constraintTop_toBottomOf="@+id/et_new_pin" />
+
+    <ImageButton
+        android:id="@+id/Ibt_visibility_invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/password_visibility"
+        android:src="@drawable/ic_visibility_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_new_pin"
+        app:srcCompat="@drawable/ic_visibility_off" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

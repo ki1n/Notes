@@ -6,11 +6,14 @@ import androidx.room.Room;
 
 import com.example.notes.data.AppDatabase;
 import com.example.notes.data.NoteDao;
+import com.example.notes.keystore.Keystore;
+import com.example.notes.keystore.SaltKeystore;
 
 public class App extends Application {
 
     private AppDatabase database;
     private NoteDao noteDao;
+    private Keystore keystore;
 
     private static App instance;
 
@@ -30,21 +33,18 @@ public class App extends Application {
 
         // получаем обект
         noteDao = database.noteDao();
+
+        // keystore
+        keystore = new SaltKeystore(this);
     }
 
     public AppDatabase getDatabase() {
         return database;
     }
 
-    public void setDatabase(AppDatabase database) {
-        this.database = database;
-    }
-
     public NoteDao getNoteDao() {
         return noteDao;
     }
 
-    public void setNoteDao(NoteDao noteDao) {
-        this.noteDao = noteDao;
-    }
+    public Keystore getKeystore() { return keystore; }
 }
