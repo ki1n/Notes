@@ -1,12 +1,15 @@
 package com.example.notes.activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
@@ -101,6 +104,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
     }
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
+        ListNotesActivity listNotesActivity;
 
         TextView headingNote;
         TextView textNote;
@@ -127,7 +131,27 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    App.getInstance().getNoteDao().delete(note);
+                    AlertDialog.Builder builder = new AlertDialog.Builder((Activity) itemView.getContext());
+                    builder.setTitle(R.string.warning);  // заголовок
+                    builder.setMessage(R.string.del_text_note); // сообщение
+                    builder.setIcon(R.drawable.ic_delete_note); // иконка
+
+                    builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            App.getInstance().getNoteDao().delete(note);
+                        }
+                    });
+
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();  // покажем диалог
+
                     return true;
                 }
             });
@@ -140,5 +164,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
             textNote.setText(note.text);
             dateNote.setText(note.date);
         }
+
     }
 }

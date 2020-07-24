@@ -30,4 +30,8 @@
     <string name="settings">Settings</string>
     <string name="pin_circle">pin_circle</string>
     <string name="invalid_pin_code">Пин код введён некорректно</string>
+    <string name="warning">Warning</string>
+    <string name="del_text_note">are you sure you want to delete the note?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>
