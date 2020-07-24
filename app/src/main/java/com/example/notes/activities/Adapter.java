@@ -104,7 +104,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
     }
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
-        ListNotesActivity listNotesActivity;
 
         TextView headingNote;
         TextView textNote;
