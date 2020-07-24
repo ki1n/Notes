@@ -65,6 +65,9 @@ public class SettingsActivity extends AppCompatActivity {
                     imageButtonVisibleInvisible.setImageResource(R.drawable.ic_visibility_off);
                     editText_pin.setTransformationMethod(new PasswordTransformationMethod());
                 }
+                pinVisible = !pinVisible;
+                editText_pin.setSelection(editText_pin.length());
+
             }
         });
 

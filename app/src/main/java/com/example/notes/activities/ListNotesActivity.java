@@ -1,5 +1,6 @@
 package com.example.notes.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -8,11 +9,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.notes.R;
 import com.example.notes.activities.details.NewNotesActivity;
+import com.example.notes.activities.settings.SettingsActivity;
 import com.example.notes.model.Note;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,5 +58,20 @@ public class ListNotesActivity extends AppCompatActivity {
                 adapter.setItemsNote(notes);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_list_notes, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.customization){
+            Intent intent = new Intent(ListNotesActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

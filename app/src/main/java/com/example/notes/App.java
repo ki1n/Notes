@@ -7,7 +7,7 @@ import androidx.room.Room;
 import com.example.notes.data.AppDatabase;
 import com.example.notes.data.NoteDao;
 import com.example.notes.keystore.Keystore;
-import com.example.notes.keystore.SaltKeystore;
+import com.example.notes.keystore.SharedKeystore;
 
 public class App extends Application {
 
@@ -35,11 +35,7 @@ public class App extends Application {
         noteDao = database.noteDao();
 
         // keystore
-        keystore = new SaltKeystore(this);
-    }
-
-    public AppDatabase getDatabase() {
-        return database;
+        keystore = new SharedKeystore(this);
     }
 
     public NoteDao getNoteDao() {

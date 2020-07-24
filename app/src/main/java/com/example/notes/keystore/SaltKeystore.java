@@ -12,6 +12,7 @@ import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
+import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
@@ -21,7 +22,7 @@ public class SaltKeystore implements Keystore {
 
     private static final int iterations = 20 * 100; // число итераций
     private static final int keyLength = 256;
-    private static final int saltLen = 128;
+    private static final int saltLen = 32;
 
     private Context context;
 
@@ -35,17 +36,16 @@ public class SaltKeystore implements Keystore {
 
     @Override
     public void saveNewPin(String pin) {
-        if (pin.length() == 4) {
-            String hashPin = null;
-            try {
-                hashPin = getSaltedHash(pin);
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            if (pin.length() == 4) {
+                String hashPin = getSaltedHash(pin);
+                getSharedPref().edit().putString(PIN_KEY, hashPin).apply();
+                Toast.makeText(context, context.getResources().getString(R.string.password_save), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context, context.getResources().getString(R.string.password_no_save), Toast.LENGTH_LONG).show();
             }
-            getSharedPref().edit().putString(PIN_KEY, hashPin).apply();
-            Toast.makeText(context, context.getResources().getString(R.string.password_save), Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(context, context.getResources().getString(R.string.password_no_save), Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -65,14 +65,14 @@ public class SaltKeystore implements Keystore {
     private String getSaltedHash(String pin) throws Exception {
         byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLen);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return Base64.getEncoder().encodeToString(salt) + "+" + hash(pin, salt);
+            return Base64.getEncoder().encodeToString(salt) + "$" + hash(pin, salt);
         }
         return "";
     }
 
     // Проверим соответствует ли данный обычный текстовый пароль сохраненному в соленый хеш.
     private boolean check(String password, String storedPassword) throws Exception {
-        String[] saltAndHash = storedPassword.split("\\+"); // соль и хеш
+        String[] saltAndHash = storedPassword.split("\\$"); // соль и хеш
         if (saltAndHash.length != 2) {
             throw new IllegalAccessException("Сохраненный пароль должен иметь форму 'salt + hash'");
         }
@@ -97,8 +97,7 @@ public class SaltKeystore implements Keystore {
             throw new IllegalAccessException("Пустые пароли не поддерживаются");
 
         SecretKeyFactory sKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, iterations, keyLength);
-        Key key = sKeyFactory.generateSecret(keySpec);
+        SecretKey key = sKeyFactory.generateSecret(new PBEKeySpec(password.toCharArray(), salt, iterations, keyLength));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return Base64.getEncoder().encodeToString(key.getEncoded()); // String для открытого ключа с использованием Base64.getEncoder()
